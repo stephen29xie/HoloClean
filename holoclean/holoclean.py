@@ -417,7 +417,7 @@ class Session:
 
         return clean, dk
 
-    def repair(self):
+    def repair(self, initfeaturizer_flag=1, dcfeaturizer_flag=1, cooccurfeaturizer_flag=1):
         """
         Repairs the initial data includes pruning, featurization, and softmax
 
@@ -438,14 +438,17 @@ class Session:
             print log
             start = time.time()
 
-        init_signal = SignalInit(self)
-        self._add_featurizer(init_signal)
+        if initfeaturizer_flag:
+            init_signal = SignalInit(self)
+            self._add_featurizer(init_signal)
 
-        dc_signal = SignalDC(self.Denial_constraints, self)
-        self._add_featurizer(dc_signal)
+        if dcfeaturizer_flag:
+            dc_signal = SignalDC(self.Denial_constraints, self)
+            self._add_featurizer(dc_signal)
 
-        cooccur_signal = SignalCooccur(self)
-        self._add_featurizer(cooccur_signal)
+        if cooccurfeaturizer_flag:
+            cooccur_signal = SignalCooccur(self)
+            self._add_featurizer(cooccur_signal)
 
         # Trying to infer or to learn catch errors when tensors are none
 
@@ -898,6 +901,10 @@ class Session:
         correct_dataframe = \
             self.holo_env.spark_sql_ctxt.createDataFrame(
                 corrected_dataset, self.dataset.attributes['Init'])
+
+        correct_dataframe_with_ind = correct_dataframe
+        self.holo_env.dataengine.add_db_table("Repaired_dataset_with_ind",
+                                              correct_dataframe_with_ind, self.dataset)
 
         correct_dataframe = correct_dataframe.drop('__ind')
 

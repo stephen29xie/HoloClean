@@ -1,0 +1,117 @@
+.container {
+    margin-left:15%;
+}
+
+#navigation-div .current a {
+    background-color: #d2d2d2;
+}
+
+#navigation-div {
+    position:fixed;
+    width:15%;
+    height:100%;
+    margin:0;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 95%;
+    background-color: #f1f1f1;
+}
+
+li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color on hover */
+li a:hover {
+    background-color: #555;
+    color: white;
+}
+
+.checkmark {
+    visibility: hidden;
+}
+
+#param-div {
+    position:absolute;
+    top:0;
+    width:85%;
+    height:100%;
+    z-index:1000;
+    text-align:center;
+    background-color: #f0fff0;
+}
+
+
+#file-div {
+    position:absolute;
+    top:100%;
+    width:85%;
+    height:100%;
+    z-index:1000;
+    text-align:center;
+    background-color: #ffe4b5;
+}
+
+#errordetector-div {
+    position:absolute;
+    top:200%;
+    width:85%;
+    height:100%;
+    z-index:1000;
+    text-align:center;
+    background-color: #eeeee0;
+}
+
+#repair-div {
+    position:absolute;
+    top:300%;
+    width:85%;
+    height:100%;
+    z-index:1000;
+    text-align:center;
+    background-color: #fff0f5;
+}
+
+#evaluation-div {
+    position:absolute;
+    top:400%;
+    width:85%;
+    height:100%;
+    z-index:1000;
+    text-align:center;
+    background-color: #e6e6fa;
+}
+
+
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 )
+                url('http://i.stack.imgur.com/FhHRx.gif')
+                50% 50%
+                no-repeat;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading .modal {
+    overflow: hidden;
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .modal {
+    display: block;
+}

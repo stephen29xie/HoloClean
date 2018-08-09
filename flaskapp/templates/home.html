@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HoloClean Home</title>
+</head>
+    <body>
+        <div id="navigation-div">
+                <nav class="navigation" id="navigation-menu">
+                    <ul>
+                        <li class="current"><a href="#param-div">Initialize HoloClean</a></li>
+                        <li><a href="#file-div">Upload Data</a>
+                        <li><a href="#errordetector-div">Choose Error Detectors</a></li>
+                        <li><a href="#repair-div">Repair</a></li>
+                        <li><a href="#evaluation-div">Evaluation</a></li>
+                    </ul>
+                </nav>
+        </div>
+        <div class="container" id="param-div">
+            <h1>Set parameters to HoloClean</h1>
+            <form id="paramform">
+                <label for="pruning_threshold1">pruning_threshold1</label>
+                <input class='holoparam' id='pruning_threshold1' name='pruning_threshold1' value=0 type="number" > <br>
+                <label for="pruning_clean_breakoff">pruning_clean_breakoff</label>
+                <input class='holoparam' id='pruning_clean_breakoff' name="pruning_clean_breakoff" value=6 type="number" > <br>
+                <label for="pruning_threshold2">pruning_threshold2</label>
+                <input class='holoparam' id='pruning_threshold2' name="pruning_threshold2" value=0 type="number" > <br>
+                <label for="pruning_dk_breakoff">pruning_dk_breakoff</label>
+                <input class='holoparam' id='pruning_dk_breakoff' name="pruning_dk_breakoff" value=6 type="number" > <br>
+                <label for="learning_iterations">learning_iterations</label>
+                <input class='holoparam' id='learning_iterations' name="learning_iterations" value=30 type="number" > <br>
+                <label for="learning_rate">learning_rate</label>
+                <input class='holoparam' id='learning_rate' name="learning_rate" value=0.001 type="number" > <br>
+                <label for="batch_size">batch_size</label>
+                <input class='holoparam' id='batch_size' name="batch_size" value=5 type="number" ><br>
+                <label for="k_inferred">k_inferred</label>
+                <input class='holoparam' id='k_inferred' name="k_inferred" value=2 type="number" ><br>
+            </form>
+            <button id='submitparam' type="submit"> Submit </button> <p class="checkmark" id="submitparam-check">&#9989;</p>
+        </div>
+
+        <div class="container" id="file-div">
+           <h1>Input filepath of dataset and denial constraints to HoloClean</h1>
+           <label for="filepath"> Relative filepath of dataset </label>
+           <input id='filepath' type="text" value="../tests/data/hospital.csv" > <br>
+           <label for="dcpath"> Relative filepath of denial constraints </label>
+           <input id='dcpath' type="text" value="../tests/data/hospital_constraints.txt"> <br>
+           <button id='submitpath' type="submit"> Submit </button> <p class="checkmark" id="submitpath-check">&#9989;</p>
+        </div>
+
+        <div class="container" id="errordetector-div">
+            <h1>Choose error detectors to use</h1>
+            <form>
+                <input type="checkbox" name="Null Error Detector" id="nullerrordetector" checked> Null Error Detector<br>
+                <input type="checkbox" name="DC Error Detector" id="dcerrordetector" checked> DC Error Detector<br>
+            </form>
+            <input type="submit" id="submiterrordetectors" value="Submit"><p class="checkmark" id="submiterrordetectors-check">&#9989;</p>
+        </div>
+
+        <div class="container" id="repair-div">
+            <h1>Select which features to use and then repair</h1>
+            <form>
+                <input type="checkbox" name="Init Featurizer" id="initfeaturizer" checked> Init Featurizer<br>
+                <input type="checkbox" name="DC Featurizer" id="dcfeaturizer" checked> DC Featurizer<br>
+                <input type="checkbox" name="Cooccurence Featurizer" id="cooccurfeaturizer" checked> Cooccurence Featurizer<br>
+            </form>
+            <input type="submit" id="repair" value="Repair"> <p class="checkmark" id="repair-check">&#9989;</p>
+        </div>
+
+        <div class="container" id="evaluation-div">
+            <table id="home-repaired-table" class="display" style="width:100%">
+            </table>
+        </div>
+
+        <div class="modal"><!-- Place at bottom of page --></div>
+    </body>
+</html>
+
+<link rel="stylesheet" type = 'text/css' href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src='static/js/jquery.combinedScroll.js'></script>
+<script src='static/js/holoclean.flaskapp.js'></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type='text/css' href='https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css'>

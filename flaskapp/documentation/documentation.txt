@@ -1,0 +1,79 @@
+About:
+
+This flask app was created for a user to use HoloClean with an interface. The pipeline of this app was modeled after the
+holoclean/tests/test.py debugging script and the jupyter notebook tutorials.
+This should serve as a good skeleton to start with.
+
+Whoever is continuing to work on this web app should be familiar with HoloClean, Flask, and basic web development (REST, AJAX).
+Communication between the backend (holoclean) and the frontend is handled through Flask endpoints and any data is sent
+in JSON format.
+
+
+The main entry points are:
+1) Initializing a HoloClean and Session Object
+2) Selecting the csv file for our data and a denial constraints txt file. The file path given in the app should be the
+   relative to the flaskapp module. Right now we are just using the hospital data in the tests/data folder.
+3) Selecting which error detectors to use (Null, DC)
+4) Selecting which featurizers (Init,DC,cooccur) to use and then repairing. NOTE: I changed the repair function in
+   holoclean.py to allow a user to select which featurizers to use. The original implementation just uses all 3 without
+   choice.
+5) Visualizing the repaired dataset.
+
+
+To give an example of how a call works in this app:
+1) User clicks something in the frontend which then a XMLHttpRequest object is created.
+2) This XMLHttpRequest object sends a request (GET, POST, etc.) to a specific endpoint in our flask server
+3) That endpoint in flask will serve this request. Our endpoints call methods from our holoclean wrapper. If it is
+   a GET request, the server will retrieve and send data back to the front end. If it was a POST request, the server
+   will post data to the backend or just prompt for something to run. A single endpoint can handle both type of requests.
+
+To run:
+
+1) Navigate to the HoloClean/holoclean directory
+2) on mac, 'export FLASK_APP=../flaskapp'
+3) 'flask run'
+4) It will display the URL it is running locally on, usually http://127.0.0.1:5000
+
+
+Files:
+
+**** holocleanwrapper.py ***
+
+holocleanwrapper.py is a wrapper that makes it convenient and organized for our flask app to use holoclean.
+This file imports every class needed from HoloClean. A HoloCleanWrapper object will be instantiated for the app.
+The methods of this class will be called by Flask endpoints, which are prompted by user action.
+Again, this is a wrapper for HoloClean, and the app is built on top of all this, so the app may need changes
+that conform to future changes in HoloClean.
+
+
+*** main.py ***
+
+main.py contains all the routes/endpoints for our flask app. There is currently only one Blueprint, named home_bp since
+we only have one page in our flask app. I chose to use Blueprints in case the app becomes big, and it helps with organization.
+You can create more Blueprints in separate files if more pages are implemented. Main.py imports and instantiates
+a HoloCleanWrapper object, which represents a single session of HoloClean. Right now the app only handles one session.
+
+
+*** templates/home.html ***
+
+HTML for the app. Only one page right now. Not pretty but does the job. This whole layout can (should) be redone
+if someone can make it look better. Currently, there is a div for each entry point, that spans the size of the window.
+
+
+
+*** static/js/holoclean.flaskapp.js ***
+
+This js file implements all the front-end functionality. I use jQuery. State variables to track user progress are
+here in the front end (eg. if user has clicked repair already, don't let them repair again). All user interaction
+and handling of incorrect use on this web app should be handled in the front end.
+
+I use DataTables (https://datatables.net) to display the repaired dataset to the user.
+These DataTables have interactive functionality. So far there is only functionality to click on an individual cell,
+and it alerts the initial value of the cell, and the inferred values, if it is a dk cell. There are many DataTable
+features available, so I encourage whoever to explore them and see what can enhance the user experience. There are
+also different styles of tables.
+
+
+*** static/css/style.css ***
+
+CSS for layout design and also the loading spinner when the app is busy doing something and prompts the user to wait.
