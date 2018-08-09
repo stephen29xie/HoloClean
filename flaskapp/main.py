@@ -85,12 +85,6 @@ def submiterrordetectors():
     return '', 204  # 204 is a No Content Flask response
 
 
-# LOAD evaluation page REMOVE
-@home_bp.route('/evaluation', methods=['GET'])
-def evaluation():
-    return render_template('repaired.html')
-
-
 @home_bp.route('/getrepairedJSON', methods=['GET'])
 def getrepairedJSON():
     '''
